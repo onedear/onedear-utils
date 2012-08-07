@@ -19,7 +19,7 @@ import javax.tools.ToolProvider;
  * @author onedear
  *
  */
-public class Compiler {
+public class Compiler { 
 	private static boolean hasFirstInit = false;
 	public static String getClassCode (String initParam) {
 		StringBuffer sb = new StringBuffer();
