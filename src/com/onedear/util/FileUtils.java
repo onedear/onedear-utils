@@ -26,49 +26,45 @@ public class FileUtils {
 	 * @param path
 	 * @param isRoot
 	 * @return
+	 * @throws IOException 
 	 */
-	public static String getContent(String path , boolean isRoot){
+	public static String getContent(String path , boolean isRoot) throws IOException{
 		File file = new File(path);
-		
+		BufferedReader reader = null;
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-			StringBuffer content = new StringBuffer() ; 
-			String line = reader.readLine() ;
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			StringBuffer content = new StringBuffer(); 
+			String line = reader.readLine();
 			while (line != null) {
-				content.append(line) ; 
-				line = reader.readLine() ;
+				content.append(line); 
+				line = reader.readLine();
 			}
-			return content.toString() ;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return content.toString();
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		return null ; 
 	} 
 	
-	public List<String> getContent(String path) {
+	public List<String> getContent(String path) throws IOException {
 		File fileContent = new File(path);
+		BufferedReader reader = null;
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileContent)));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileContent)));
 			List<String> list = new ArrayList<String>();
-//			String content = null ; 
-			String line = reader.readLine() ;
+			String line = reader.readLine();
 			while (line != null) {
-				list.add(line) ; 
-				line = reader.readLine() ;
+				list.add(line); 
+				line = reader.readLine();
 			}
-			return list ;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return list;
+		} finally {
+			reader.close();
 		}
-		return null ; 
 	}
 	
 	/**
@@ -79,13 +75,13 @@ public class FileUtils {
 	 * @return
 	 */
 	public static boolean stringToFile(String path , String filename , String content ) {
-		String filepath = null ;
+		String filepath = null;
 		if(path == null)
-			filepath = filename ; 
+			filepath = filename; 
 		else if(path.endsWith("/") || filename.startsWith("/"))
-			filepath = path + filename ;
+			filepath = path + filename;
 		else 
-			filepath = path + "/" + filename ; 
+			filepath = path + "/" + filename; 
 		File file = new File(filepath);
 		file.delete();
 		PrintWriter pw = null;
@@ -97,11 +93,11 @@ public class FileUtils {
 			pw.flush();
 			
 		} catch(IOException e) {
-			return false ; 
+			return false; 
 		} finally {
 			pw.close();
 		}
-		return true ; 
+		return true; 
 	}
 	
 	/**
@@ -122,21 +118,21 @@ public class FileUtils {
 				pw.println(content);
 			pw.flush();
 		} catch(IOException e) {
-			return false ; 
+			return false; 
 		} finally {
 			pw.close();
 		}
-		return true ; 
+		return true; 
 	}
 	
 	public static void saveObjToFile(String path , String fileName , Object obj) throws IOException {
-		String filepath = null ;
+		String filepath = null;
 		if(path == null)
-			filepath = fileName ; 
+			filepath = fileName; 
 		else if(path.endsWith("/"))
-			filepath = path + fileName ;
+			filepath = path + fileName;
 		else 
-			filepath = path + "/" + fileName ; 
+			filepath = path + "/" + fileName; 
 		
 		FileOutputStream fos = new FileOutputStream(filepath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -155,17 +151,22 @@ public class FileUtils {
 	 * @throws ClassNotFoundException
 	 */
 	public static Object readObjFromFile(String path , String fileName) throws IOException, ClassNotFoundException {
-		String filepath = null ;
+		String filepath = null;
 		if(path == null)
-			filepath = fileName ; 
+			filepath = fileName; 
 		else if(path.endsWith("/"))
-			filepath = path + fileName ;
+			filepath = path + fileName;
 		else 
-			filepath = path + "/" + fileName ; 
+			filepath = path + "/" + fileName; 
 		
 		FileInputStream fis = new FileInputStream(filepath);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        return ois.readObject();
+        ObjectInputStream ois = null;
+        try {
+        	ois = new ObjectInputStream(fis);
+        	return ois.readObject();
+        } finally {
+        	ois.close();
+        }
 	}
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
