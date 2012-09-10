@@ -50,11 +50,15 @@ public class FileUtils {
 		}
 	} 
 	
-	public List<String> getContent(String path) throws IOException {
-		File fileContent = new File(path);
+	public static List<String> getContent(String path) throws IOException {
+		File file = new File(path);
+		return getContent(file);
+	}
+	
+	public static List<String> getContent(File file) throws IOException {
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileContent)));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			List<String> list = new ArrayList<String>();
 			String line = reader.readLine();
 			while (line != null) {
