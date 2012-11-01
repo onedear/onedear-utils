@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 /**
  * 关于时间的一点工具类
  * @author onedear
@@ -71,6 +72,81 @@ public class DateUtil {
 		c.add(Calendar.DAY_OF_YEAR, 1);
 		return c.getTime();
 	}
+	
+	/**
+	 * 获取下一个时间点与当前的毫秒
+	 * @param hour
+	 * @return
+	 */
+	public static long getNextHourTime(int hour) {
+		Calendar c1 = GregorianCalendar.getInstance();
+		c1.setTimeInMillis(System.currentTimeMillis());
+		int currentHour = c1.get(Calendar.HOUR_OF_DAY);
+		if (currentHour >= hour) {
+			c1.set(Calendar.HOUR_OF_DAY, 0);
+			c1.set(Calendar.MINUTE, 0);
+			c1.set(Calendar.SECOND, 0);
+			c1.set(Calendar.MILLISECOND, 0);
+			c1.add(Calendar.DAY_OF_YEAR, 1);
+			c1.add(Calendar.HOUR_OF_DAY, hour);
+		} else {
+			c1.set(Calendar.HOUR_OF_DAY, hour);
+			c1.set(Calendar.MINUTE, 0);
+			c1.set(Calendar.SECOND, 0);
+			c1.set(Calendar.MILLISECOND, 0);
+		}
+		return c1.getTimeInMillis();
+	}
+	
+	/**
+	 * 判断两个日期是否同一天
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	public static boolean isSameDay(long time1, long time2) {
+		Calendar c1 = GregorianCalendar.getInstance();
+		Calendar c2 = GregorianCalendar.getInstance();
+		c1.setTimeInMillis(time1);
+		c2.setTimeInMillis(time2);
+		if(c1.get(Calendar.DAY_OF_YEAR) == c2.get(Calendar.DAY_OF_YEAR))
+			return true;
+		return false;
+	}
+	
+	/**
+	 * 判断日志是否昨天
+	 * @param time
+	 * @return
+	 */
+	public static boolean isYesterday(long time) {
+		long distance = dayDistance(time);
+		if (distance == -1) 
+			return true;
+		return false;
+	}
+	
+	/**
+	 * 查看距离今天有多少天,负数是过去,正数是未来
+	 * @param time
+	 * @return
+	 */
+	public static long dayDistance(long time) {
+		Calendar c1 = getDayCalendar(time);
+		Calendar c2 = getDayCalendar(System.currentTimeMillis());
+		long dayMillis = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS);
+		return (c1.getTimeInMillis() - c2.getTimeInMillis()) / dayMillis;
+	}
+	
+	private static Calendar getDayCalendar(long millis) {
+		Calendar c1 = GregorianCalendar.getInstance();
+		c1.setTimeInMillis(millis);
+		c1.set(Calendar.HOUR_OF_DAY, 0);
+		c1.set(Calendar.MINUTE, 0);
+		c1.set(Calendar.SECOND, 0);
+		c1.set(Calendar.MILLISECOND, 0);
+		return c1;
+	} 
 	
 	public static void main(String[] args) {
 		System.out.println(DateToString(new Date() , 3));

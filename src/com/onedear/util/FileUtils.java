@@ -20,35 +20,6 @@ import java.util.List;
  *	2009-11-3 pm 2：36
  */
 public class FileUtils {
-	/**
-	 * 数据文件的path，建议完整的路径
-	 * isRoot，是否从根目录找起，true从类的当前目录找起
-	 * @param path
-	 * @param isRoot
-	 * @return
-	 * @throws IOException 
-	 */
-	public static String getContent(String path , boolean isRoot) throws IOException{
-		File file = new File(path);
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-			StringBuffer content = new StringBuffer(); 
-			String line = reader.readLine();
-			while (line != null) {
-				content.append(line); 
-				line = reader.readLine();
-			}
-			return content.toString();
-		} finally {
-			try {
-				reader.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	} 
 	
 	public static List<String> getContent(String path) throws IOException {
 		File file = new File(path);
@@ -73,7 +44,7 @@ public class FileUtils {
 	
 	/**
 	 * 将content存进一个新文件
-	 * @param path
+	 * @param path  为空则直接读取filename
 	 * @param filename
 	 * @param content
 	 * @return
@@ -140,9 +111,11 @@ public class FileUtils {
 		
 		FileOutputStream fos = new FileOutputStream(filepath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-        oos.writeObject(obj);
-        oos.close();
+        try {
+        	oos.writeObject(obj);
+        } finally {
+        	oos.close();
+        }
 	}
 	
 	/**
