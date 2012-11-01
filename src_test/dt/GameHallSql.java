@@ -10,7 +10,6 @@ import com.onedear.util.FileUtils;
 
 /**
  * <br>==========================
- * <br> @company ：优视科技
  * <br> @author  ：邱志明(onedear)
  * <br> @version ：1.0 
  * <br> @date    : 2012-8-29上午10:31:45

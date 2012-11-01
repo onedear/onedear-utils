@@ -12,8 +12,7 @@ import com.onedear.exceptions.PackageNotFoundException;
 
 /**
  * <br>==========================
- * <br> @company ：优视科技
- * <br> @author  ：邱志明(onedear)
+ * <br> @author  ：onedear
  * <br> @version ：1.0 
  * <br> @date    : 2012-10-19上午11:44:19
  * <br>==========================
