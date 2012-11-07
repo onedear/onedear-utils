@@ -7,7 +7,7 @@ import com.onedear.util.DateUtil;
 
 public class TestDate {
 	public static void main(String[] args) throws ParseException {
-		String dateStr = "2012-11-2 00:00:00.000";
+		String dateStr = "2012-11-3 00:00:00.000";
 		Date date = DateUtil.StringToDate(dateStr, "yyyy-MM-dd HH:mm:ss.SSS");
 		System.out.println(date.getTime());
 		
