@@ -1,17 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <appender name="STDOUT"
-    class="ch.qos.logback.core.ConsoleAppender">
-    <layout class="ch.qos.logback.classic.PatternLayout">
-      <Pattern>%-70(%c{15}.%M[%date{yyyy-MM-dd HH:mm:ss}]) : %m%ex%n</Pattern>
-      <!-- <Pattern>%-50(%c{15}.%M\(%F:%L\)) : %m%ex%n</Pattern> -->
-    </layout>
-  </appender>
-  
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%-70(%c{15}.%M[%date{yyyy-MM-dd HH:mm:ss}]): %m%ex%n
+			</Pattern>
+			<!-- <Pattern>%-50(%c{15}.%M\(%F:%L\)) : %m%ex%n</Pattern> -->
+		</layout>
+	</appender>
 
-	
-  <root>
-    <level value="info" />
-    <appender-ref ref="STDOUT" />
-  </root>
+	<appender name="GAME_HALL_DOWNLOAD"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${user.dir}/logs/download.log</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+			<fileNamePattern>${user.dir}/logs/download.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%-70(%c{15}.%M[%date{yyyy-MM-dd HH:mm:ss}]) : %m%ex%n
+			</Pattern>
+			<!-- <Pattern>%-50(%c{15}.%M\(%F:%L\)) : %m%ex%n</Pattern> -->
+		</layout>
+	</appender>
+
+	<logger name="dt.LogDownloader" level="debug">
+		<appender-ref ref="GAME_HALL_DOWNLOAD" />
+	</logger>
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+	</root>
 </configuration>

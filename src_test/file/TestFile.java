@@ -1,15 +1,13 @@
 package file;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Test;
 
 import com.onedear.util.FileUtils;
-import com.onedear.util.reflect.ReflectUtil;
 
 /**
  * <br>==========================
@@ -23,9 +21,24 @@ public class TestFile {
 	
 	@Test
 	public void test() throws IOException, ClassNotFoundException {
-		List<Class> list = ReflectUtil.findPackageClasses("com.onedear.util");
-		System.out.println(list);
+		List<String> jsAscii = FileUtils.getContent("C:\\Documents and Settings\\Administrator\\桌面\\js_ascii.txt");
+		List<String> newJsAscii = new ArrayList<String>();
+		for (String ascii : jsAscii) {
+			if (ascii.indexOf("-> ") < 1)
+				continue;
+			int start = ascii.indexOf("-> ") + 3;
+			newJsAscii.add(ascii.substring(start));
+		}
 		
+		char c = 0;
+		for (int i = 0; i < 128; i++) {
+			String encodeChar = URLEncoder.encode(String.valueOf(c), "utf-8");
+//			System.out.println(c + " ---> " + encodeChar);
+			if (!encodeChar.equals(newJsAscii.get(i))) {
+				System.out.println(c + " java: " + encodeChar + ", js: " + newJsAscii.get(i));
+			}
+			c += 1;
+		}
 	}
 }
 

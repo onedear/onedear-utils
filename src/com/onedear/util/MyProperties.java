@@ -11,7 +11,7 @@ import java.util.Properties;
 import java.util.Set;
 
 
-public class BwProperties extends Properties {
+public class MyProperties extends Properties {
 
 	private static final long serialVersionUID = -6565138139913919011L;
 	
@@ -20,7 +20,7 @@ public class BwProperties extends Properties {
 //	public static String classPath = BwProperties.class.getResource("/").getPath();
 
 	/* 构造方法 */
-	public BwProperties(String propertiesPath) throws Exception {
+	public MyProperties(String propertiesPath) throws Exception {
 		try {
 			InputStream is = new FileInputStream(propertiesPath);
 			this.load(is);
@@ -36,7 +36,7 @@ public class BwProperties extends Properties {
 	 * @return
 	 * @author fisher
 	 */
-	public static BwProperties getPro(String propertiesPath) {
+	public static MyProperties getPro(String propertiesPath) {
 		return init(propertiesPath);
 	}
 
@@ -48,10 +48,10 @@ public class BwProperties extends Properties {
 	 * @param propertiesPath
 	 * @author fisher
 	 */
-	private static BwProperties init(String propertiesPath) {
-		BwProperties bwPro = null;
+	private static MyProperties init(String propertiesPath) {
+		MyProperties bwPro = null;
 			try {
-				bwPro = new BwProperties(propertiesPath);
+				bwPro = new MyProperties(propertiesPath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -60,7 +60,7 @@ public class BwProperties extends Properties {
 	
 	
 	public static Map<String , String> initToMap(String propertiesPath) {
-		BwProperties bwPro = init(propertiesPath);
+		MyProperties bwPro = init(propertiesPath);
 		Map<String , String > map = new HashMap<String , String>();
 		Set<Object> keySet = bwPro.keySet();
 		Iterator<Object> iterator = keySet.iterator();
