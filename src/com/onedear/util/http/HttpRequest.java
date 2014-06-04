@@ -10,11 +10,10 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.net.ssl.HostnameVerifier;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -27,13 +26,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
@@ -183,12 +177,19 @@ public class HttpRequest {
 		return false;
 	}
 	
-	public static void main(String[] args) throws UnsupportedEncodingException, IOException {
+	public static void main(String[] args) throws UnsupportedEncodingException, IOException, InterruptedException {
 //		String url = "http://www.baidu.com/img/baidu_sylogo1.gif";
 //		String toPath = "C:\\Documents and Settings\\Administrator\\桌面\\ftpdownload\\xxx.gif";
-		String url = "http://10.34.132.52:9080/gamehall/gamehall-access_2012120105.log";
-		String toPath = "C:\\Documents and Settings\\Administrator\\桌面\\ftpdownload\\xxx.log";
-		download(url, toPath, "admin", "ucweb@2012");
-		System.out.println("end");
+//		String url = "http://10.34.132.52:9080/gamehall/gamehall-access_2012120105.log";
+//		String toPath = "C:\\Documents and Settings\\Administrator\\桌面\\ftpdownload\\xxx.log";
+//		download(url, toPath, "admin", "ucweb@2012");
+//		System.out.println("end");
+		Map map = new HashMap();
+		map.put("callback", "ACT.voteback");
+		for(int i = 0; i < 10000; i++) {
+			Thread.sleep(100);
+			String result = postRequest("http://ud.gd.qq.com/api/activity/4447/vote/image/21602/jsonp", map);
+			System.out.println(result);
+		}
 	}
 }

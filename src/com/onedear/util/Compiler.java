@@ -28,22 +28,22 @@ public class Compiler {
 			.append(initParam)
 			.append("}")
 			.append("}");
-		return sb.toString() ; 
+		return sb.toString();
 	}
 	
-	public static Object eval(String sourceCode) 
-			throws SecurityException, NoSuchMethodException, IOException, 
-			ClassNotFoundException, IllegalArgumentException, 
+	public static Object eval(String sourceCode)
+			throws SecurityException, NoSuchMethodException, IOException,
+			ClassNotFoundException, IllegalArgumentException,
 			IllegalAccessException, InvocationTargetException, InstantiationException {
 		URLClassLoader classLoader = new URLClassLoader(
 				new URL[] { new File(System.getProperty("java.io.tmpdir")).toURI().toURL() });
-		Class clazz = null ; 
-		boolean hasExists = true ; 
-		 try{ 
+		Class clazz = null;
+		boolean hasExists = true;
+		 try{
 			 clazz = classLoader.loadClass("ETEvaler");
 		 } catch (ClassNotFoundException e) {
 			 //说明类未初始化过，需要初始化
-			 hasExists = false ; 
+			 hasExists = false;
 		 }
 		 if(!hasExists || !hasFirstInit) {
 			 hasFirstInit = true;
@@ -70,8 +70,8 @@ public class Compiler {
 					new URL[] { new File(System.getProperty("java.io.tmpdir")).toURI().toURL() });
         clazz = classLoader.loadClass("ETEvaler");
         Method method = clazz.getDeclaredMethod("eval");
-        Object value = method.invoke(clazz.newInstance() );
-        return value ; 
+        Object value = method.invoke(clazz.newInstance());
+        return value;
 		
 	}
 	

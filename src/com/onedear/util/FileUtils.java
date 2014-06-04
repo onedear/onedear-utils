@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -58,12 +59,12 @@ public class FileUtils {
 		else 
 			filepath = path + "/" + filename; 
 		File file = new File(filepath);
-		file.delete();
+//		file.delete();
 		PrintWriter pw = null;
 		try {
 			if(!file.exists())
 				file.createNewFile();
-			pw = new PrintWriter(file);
+			pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), "utf-8"));
 			pw.print(content);
 			pw.flush();
 			
@@ -196,11 +197,12 @@ public class FileUtils {
 	}
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
-		Date date = new Date();
-		saveObjToFile("c:/" , "testObj" , date);
+//		Date date = new Date();
+//		saveObjToFile("c:/" , "testObj" , date);
 //		Object obj = readObjFromFile("c:/" , "testObj" );
 //		Date dd = (Date)obj;
 //		System.out.println(dd);
+		stringToFile("/Users/onedear/Desktop", "name.txt", "('跟你ξ不熟↘')");
 	}
 	
 }

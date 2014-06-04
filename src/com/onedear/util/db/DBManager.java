@@ -19,14 +19,13 @@ public class DBManager {
 	private static final String LINE = "\r\n";
 	private static final String TAB = "\t";
 	
-	private Connection con ;
+	private Connection con;
 	
 	private PreparedStatement pstmt;
 	
 	private ResultSet rs;
 	
 	public DBManager() {
-		
 	}
 	
 	public DBManager(String ipPort ,String dbname ,String userName ,String password , Integer type) {
@@ -37,14 +36,13 @@ public class DBManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	} 
+	}
 	
 	public DBManager(Connection con) {
-		this.con = con ;
+		this.con = con;
 	}
 	
 	public ResultSet select(String sql ) {
-		
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -52,8 +50,7 @@ public class DBManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		return null ; 
+		return null;
 	}
 	
 	public void insert(String sql) {
@@ -63,20 +60,16 @@ public class DBManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void close() {
 		try {
 			rs.close();
-			
 		} catch(Exception e) {
-			
 		}
 		try {
 			pstmt.close();
 		} catch(Exception e) {
-			
 		}
 	}
 }
